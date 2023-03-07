@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="Go.Views.UserView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:viewModels="clr-namespace:Go.ViewModels">
+    <ContentView.BindingContext>
+        <viewModels:UserViewModel />
+    </ContentView.BindingContext>
+    <AbsoluteLayout>
+
+        <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <ScrollView.Triggers>
+                <DataTrigger
+                    Binding="{Binding IsLoading}"
+                    TargetType="ScrollView"
+                    Value="True">
+                    <Setter Property="Opacity" Value="0.1" />
+                    <Setter Property="InputTransparent" Value="True" />
+                </DataTrigger>
+            </ScrollView.Triggers>
+
+            <StackLayout Spacing="0">
+
+                <!--  GO LOGO  -->
+                <Image
+                    Margin="0,60,0,0"
+                    HeightRequest="100"
+                    Source="logo"
+                    WidthRequest="100" />
+
+                <!--  CREATE BUTTON  -->
+                <Frame Margin="51,63,51,0" Style="{DynamicResource FrameButton}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CreateCommand}" />
+                    </Frame.GestureRecognizers>
+
+                    <StackLayout Orientation="Horizontal" Spacing="0">
+
+                        <svg:SvgCachedImage
+                            Margin="22,0,27,0"
+                            HeightRequest="16"
+                            Source="add.svg"
+                            WidthRequest="16" />
+
+                        <Label
+                            Style="{DynamicResource MediumLabelStyle}"
+                            Text="Crear publicación"
+                            TextColor="{DynamicResource SecondLightDarkColor}"
+                            VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+
+                </Frame>
+
+                <!--  MY EVENTS  -->
+                <Frame Margin="51,25,51,0" Style="{DynamicResource FrameButton}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MyEventsCommand}" />
+                    </Frame.GestureRecognizers>
+
+                    <StackLayout Orientation="Horizontal" Spacing="0">
+
+                        <svg:SvgCachedImage
+                            Margin="22,0,27,0"
+                            HeightRequest="16"
+                            Source="event.svg"
+                            WidthRequest="16" />
+
+                        <Label
+                            Style="{DynamicResource MediumLabelStyle}"
+                            Text="Mis eventos"
+                            TextColor="{DynamicResource SecondLightDarkColor}"
+                            VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+
+                </Frame>
+
+                <!--  MY ACTIVITIES  -->
+                <Frame Margin="51,25,51,0" Style="{DynamicResource FrameButton}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MyActivitiesCommand}" />
+                    </Frame.GestureRecognizers>
+
+                    <StackLayout Orientation="Horizontal" Spacing="0">
+
+                        <svg:SvgCachedImage
+                            Margin="22,0,27,0"
+                            HeightRequest="16"
+                            Source="activity.svg"
+                            WidthRequest="16" />
+
+                        <Label
+                            Style="{DynamicResource MediumLabelStyle}"
+                            Text="Mis actividades"
+                            TextColor="{DynamicResource SecondLightDarkColor}"
+                            VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+
+                </Frame>
+
+                <!--  FAVORITES EVENTS  -->
+                <Frame Margin="51,25,51,0" Style="{DynamicResource FrameButton}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FavoriteEventsCommand}" />
+                    </Frame.GestureRecognizers>
+
+                    <StackLayout Orientation="Horizontal" Spacing="0">
+
+                        <svg:SvgCachedImage
+                            Margin="22,0,27,0"
+                            HeightRequest="16"
+                            Source="favorite_heart.svg"
+                            WidthRequest="16" />
+
+                        <Label
+                            Style="{DynamicResource MediumLabelStyle}"
+                            Text="Eventos favoritos"
+                            TextColor="{DynamicResource SecondLightDarkColor}"
+                            VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+
+                </Frame>
+
+                <!--  FAVORITES ACTIVITIES  -->
+                <Frame Margin="51,25,51,0" Style="{DynamicResource FrameButton}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FavoriteActivitiesCommand}" />
+                    </Frame.GestureRecognizers>
+
+                    <StackLayout Orientation="Horizontal" Spacing="0">
+
+                        <svg:SvgCachedImage
+                            Margin="22,0,27,0"
+                            HeightRequest="16"
+                            Source="favorite_star.svg"
+                            WidthRequest="16" />
+
+                        <Label
+                            Style="{DynamicResource MediumLabelStyle}"
+                            Text="Actividades favoritas"
+                            TextColor="{DynamicResource SecondLightDarkColor}"
+                            VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+
+                </Frame>
+
+                <!--  CHANGE PASSWORD  -->
+                <Frame Margin="51,25,51,0" Style="{DynamicResource FrameButton}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangePasswordCommand}" />
+                    </Frame.GestureRecognizers>
+
+                    <StackLayout Orientation="Horizontal" Spacing="0">
+
+                        <svg:SvgCachedImage
+                            Margin="22,0,27,0"
+                            HeightRequest="16"
+                            Source="key.svg"
+                            WidthRequest="16" />
+
+                        <Label
+                            Style="{DynamicResource MediumLabelStyle}"
+                            Text="Cambiar contraseña"
+                            TextColor="{DynamicResource SecondLightDarkColor}"
+                            VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+
+                </Frame>
+
+                <!--  LOG OUT  -->
+                <Frame
+                    Margin="51,32,51,20"
+                    BackgroundColor="{DynamicResource DarkBackgroundColor}"
+                    Style="{DynamicResource FrameButton}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LogoutCommand}" />
+                    </Frame.GestureRecognizers>
+
+                    <StackLayout Orientation="Horizontal" Spacing="0">
+
+                        <svg:SvgCachedImage
+                            Margin="22,0,27,0"
+                            HeightRequest="16"
+                            Source="logout.svg"
+                            WidthRequest="16" />
+
+                        <Label
+                            Style="{DynamicResource MediumLabelStyle}"
+                            Text="Cerrar sesión"
+                            TextColor="{DynamicResource LightBackgroundColor}"
+                            VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+
+                </Frame>
+
+            </StackLayout>
+        </ScrollView>
+
+        <ActivityIndicator
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsLoading}" />
+
+    </AbsoluteLayout>
+</ContentView>

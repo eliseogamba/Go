@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application
+    x:Class="Go.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Go.Converters">
+    <Application.Resources>
+
+        <ResourceDictionary Source="Themes/DefaultTheme.xaml" />
+
+        <!--  CONVERTERS  -->
+        <converters:IsEmptyStringConverter x:Key="IsEmptyStringConverter" />
+        <converters:IsNotEmptyStringConverter x:Key="IsNotEmptyStringConverter" />
+        <converters:NegateBoolConveter x:Key="NegateBoolConveter" />
+
+        <x:Double x:Key="SmallFontSize">12</x:Double>
+        <x:Double x:Key="BaseFontSize">14</x:Double>
+        <x:Double x:Key="MediumFontSize">16</x:Double>
+        <x:Double x:Key="LargeFontSize">18</x:Double>
+        <x:Double x:Key="BigFontSize">20</x:Double>
+
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+            <Setter Property="FontFamily" Value="SfProRegular" />
+            <Setter Property="BackgroundColor" Value="{DynamicResource BrandColor}" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="WidthRequest" Value="200" />
+            <Setter Property="HeightRequest" Value="38" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="{StaticResource BaseFontSize}" />
+            <Setter Property="FontFamily" Value="SfProRegular" />
+        </Style>
+
+        <Style TargetType="ActivityIndicator">
+            <Setter Property="HeightRequest" Value="60" />
+            <Setter Property="IsRunning" Value="True" />
+            <Setter Property="Color" Value="{DynamicResource DarkTextColor}" />
+        </Style>
+
+        <Style TargetType="ListView">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="HasUnevenRows" Value="True" />
+            <Setter Property="SeparatorVisibility" Value="None" />
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontFamily" Value="SfProRegular" />
+            <Setter Property="PlaceholderColor" Value="{DynamicResource 9E9E9E}" />
+        </Style>
+
+        <Style TargetType="Editor">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontFamily" Value="SfProRegular" />
+            <Setter Property="PlaceholderColor" Value="{DynamicResource 9E9E9E}" />
+        </Style>
+
+        <!--  SPAN STYLES  -->
+        <!--<Style x:Key="BoldSpanStyle" TargetType="Sp">
+
+        </Style>-->
+
+        <!--  LABEL STYLES  -->
+
+        <!--  LIGHT  -->
+        <Style x:Key="LightSmallLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="SfProLight" />
+            <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
+        </Style>
+
+        <Style x:Key="LightLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="SfProLight" />
+            <Setter Property="FontSize" Value="{StaticResource BaseFontSize}" />
+        </Style>
+
+        <Style x:Key="LightMediumLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="SfProLight" />
+            <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        </Style>
+
+        <Style x:Key="LightLargeLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="SfProLight" />
+            <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
+        </Style>
+
+        <!--  REGULAR  -->
+        <Style x:Key="SmallLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
+        </Style>
+
+        <Style x:Key="MediumLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        </Style>
+
+        <Style x:Key="LargeLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
+        </Style>
+
+        <Style x:Key="BigLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="{StaticResource BigFontSize}" />
+        </Style>
+
+        <!--  BOLD  -->
+        <Style x:Key="BoldLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="SfProBold" />
+            <Setter Property="FontSize" Value="{StaticResource BaseFontSize}" />
+        </Style>
+
+        <Style x:Key="BoldMediumLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="SfProBold" />
+            <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        </Style>
+
+        <Style x:Key="BoldLargeLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="SfProBold" />
+            <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
+        </Style>
+
+        <Style x:Key="BoldBigLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="SfProBold" />
+            <Setter Property="FontSize" Value="{StaticResource BigFontSize}" />
+        </Style>
+
+        <Style x:Key="SeparatorStyle" TargetType="BoxView">
+            <Setter Property="HeightRequest" Value="1" />
+            <Setter Property="Color" Value="#D7D7D7" />
+        </Style>
+
+        <Style x:Key="Search" TargetType="Entry">
+            <Setter Property="FontSize" Value="{StaticResource BigFontSize}" />
+            <Setter Property="FontFamily" Value="SfProRegular" />
+            <Setter Property="HeightRequest" Value="45" />
+            <Setter Property="PlaceholderColor" Value="{DynamicResource PlaceholderColor}" />
+            <Setter Property="TextColor" Value="{DynamicResource DarkTextColor}" />
+        </Style>
+
+        <Style x:Key="Input" TargetType="Frame">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="BackgroundColor" Value="{DynamicResource LightBackgroundColor}" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="HeightRequest" Value="45" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            <Setter Property="WidthRequest" Value="360" />
+        </Style>
+
+        <Style x:Key="EditorInput" TargetType="Frame">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="BackgroundColor" Value="{DynamicResource LightBackgroundColor}" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="HeightRequest" Value="133" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            <Setter Property="WidthRequest" Value="360" />
+        </Style>
+
+        <Style x:Key="FrameButton" TargetType="Frame">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="BackgroundColor" Value="{DynamicResource LightBackgroundColor}" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="HeightRequest" Value="35" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        </Style>
+
+        <Style x:Key="AdFrame" TargetType="Frame">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="BackgroundColor" Value="{DynamicResource BrandColor}" />
+
+        </Style>
+
+    </Application.Resources>
+</Application>

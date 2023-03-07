@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Go.Views.MapPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:Go.Controls"
+    xmlns:map="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+    <AbsoluteLayout>
+
+        <!--  MAP  -->
+        <controls:CustomMap
+            x:Name="map"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All" />
+
+        <!--  POPUP  -->
+        <Frame
+            x:Name="popup"
+            Padding="0"
+            AbsoluteLayout.LayoutBounds="0.5,0.975,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            CornerRadius="10"
+            HasShadow="False"
+            Scale="0">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding PopupTappedCommand}" />
+            </Frame.GestureRecognizers>
+
+            <Grid ColumnSpacing="0" RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="39" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  KIND OF EVENT  -->
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="26,22,0,0"
+                    FontSize="15"
+                    Text="{Binding Kind}"
+                    TextColor="#ED1C24" />
+
+                <!--  EVENT DATE  -->
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="0,22,0,0"
+                    FontSize="14"
+                    HorizontalOptions="EndAndExpand"
+                    HorizontalTextAlignment="End"
+                    Text="{Binding Occurrence.DatetimeStart, StringFormat='{0:dd/MM/yy - hh:mm} hs.'}"
+                    TextColor="#707070">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Kind}"
+                            TargetType="Label"
+                            Value="Actividad">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+
+                <!--  CLOSE ICON  -->
+                <svg:SvgCachedImage
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="0,17,14.5,0"
+                    HeightRequest="10"
+                    HorizontalOptions="End"
+                    Source="close.svg"
+                    WidthRequest="10">
+                    <svg:SvgCachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CloseCommand}" />
+                    </svg:SvgCachedImage.GestureRecognizers>
+                </svg:SvgCachedImage>
+
+                <!--  OCCURRENCE TITLE  -->
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="26,0,0,0"
+                    FontSize="20"
+                    Text="{Binding Occurrence.Title}"
+                    VerticalTextAlignment="Center" />
+
+                <!--  OCCURRENCE ADDRESS  -->
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="26,0,0,0"
+                    FontSize="15">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Occurrence.Street}" />
+                            <Span Text="{Binding Occurrence.StreetNumber, StringFormat=' {0}'}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+            </Grid>
+
+        </Frame>
+
+    </AbsoluteLayout>
+</ContentPage>

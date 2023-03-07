@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Go.Views.FavoriteEventsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:Go.Behaviors"
+    xmlns:controls="clr-namespace:Go.Controls"
+    xmlns:image="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:viewModels="clr-namespace:Go.ViewModels"
+    NavigationPage.HasBackButton="False">
+    <ContentPage.BindingContext>
+        <viewModels:FavoriteEventsViewModel />
+    </ContentPage.BindingContext>
+    <NavigationPage.TitleView>
+
+        <StackLayout Orientation="Horizontal" Spacing="0">
+
+            <!--  BACK ARROW  -->
+            <svg:SvgCachedImage
+                HeightRequest="30"
+                HorizontalOptions="Start"
+                Source="back_arrow.svg"
+                WidthRequest="30">
+                <svg:SvgCachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommand}" />
+                </svg:SvgCachedImage.GestureRecognizers>
+            </svg:SvgCachedImage>
+
+            <!--  TITLE  -->
+            <Label
+                Margin="15,0,0,0"
+                Style="{DynamicResource MediumLabelStyle}"
+                Text="Eventos Favoritos"
+                VerticalTextAlignment="Center" />
+
+        </StackLayout>
+
+    </NavigationPage.TitleView>
+    <AbsoluteLayout>
+
+        <!--  EMPTY VIEW  -->
+        <svg:SvgCachedImage
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            Aspect="AspectFill"
+            IsVisible="{Binding IsEmpty}"
+            Source="{Binding EmptyImage, StringFormat='Empty{0}.svg'}" />
+
+        <!--  ELEMENTS LIST  -->
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            Spacing="0">
+
+            <!--  LOADER  -->
+            <controls:Loader
+                Margin="0,29,0,0"
+                CountElements="2"
+                HasUnevenRows="True"
+                IsVisible="{Binding IsLoading}"
+                SeparatorVisibility="None">
+                <controls:Loader.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout
+                                Margin="50,20"
+                                Orientation="Horizontal"
+                                Spacing="0">
+
+                                <controls:AnimatedFrame
+                                    Padding="0"
+                                    BackgroundColor="#CACACA"
+                                    CornerRadius="41.5"
+                                    HasShadow="False"
+                                    HeightRequest="83"
+                                    HorizontalOptions="Start"
+                                    WidthRequest="83" />
+
+                                <controls:AnimatedFrame
+                                    Margin="34,0,0,0"
+                                    Padding="0"
+                                    BackgroundColor="#CACACA"
+                                    CornerRadius="10"
+                                    HasShadow="False"
+                                    HeightRequest="20"
+                                    VerticalOptions="CenterAndExpand"
+                                    WidthRequest="200" />
+
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </controls:Loader.ItemTemplate>
+            </controls:Loader>
+
+            <!--  EVENTS LIST  -->
+            <ListView
+                Margin="0,29,0,0"
+                IsPullToRefreshEnabled="True"
+                IsRefreshing="{Binding IsRefreshing}"
+                ItemsSource="{Binding Elements}"
+                SelectedItem="{Binding Event, Mode=TwoWay}">
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior Command="{Binding ElementAppearingCommand}" EventName="ItemAppearing" />
+                </ListView.Behaviors>
+                <ListView.Triggers>
+                    <DataTrigger
+                        Binding="{Binding IsLoading}"
+                        TargetType="ListView"
+                        Value="True">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </ListView.Triggers>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <StackLayout
+                                Margin="50,20"
+                                Orientation="Horizontal"
+                                Spacing="0">
+
+                                <!--  EVENT IMAGE  -->
+                                <Frame
+                                    Padding="0"
+                                    CornerRadius="41.5"
+                                    HasShadow="False"
+                                    IsClippedToBounds="True">
+
+                                    <!--  IMAGE  -->
+                                    <image:CachedImage
+                                        Aspect="AspectFill"
+                                        HeightRequest="83"
+                                        LoadingPlaceholder="loading"
+                                        Source="{Binding Photo}"
+                                        WidthRequest="83" />
+
+                                </Frame>
+
+                                <StackLayout
+                                    Margin="34,0,0,0"
+                                    Spacing="0"
+                                    VerticalOptions="CenterAndExpand">
+
+                                    <!--  TITLE  -->
+                                    <Label
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="2"
+                                        Style="{DynamicResource BoldLargeLabelStyle}"
+                                        Text="{Binding Title}"
+                                        TextColor="{DynamicResource DarkTextColor}" />
+
+                                    <!--  LOCATION  -->
+                                    <StackLayout
+                                        Margin="0,8,0,0"
+                                        Orientation="Horizontal"
+                                        Spacing="0">
+
+                                        <!--  PIN IMAGE  -->
+                                        <svg:SvgCachedImage
+                                            Margin="0,0,10,0"
+                                            HeightRequest="18"
+                                            Source="pin.svg"
+                                            WidthRequest="13" />
+
+                                        <!--  ADDRESS TEXT  -->
+                                        <Label Style="{DynamicResource LightLabelStyle}">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Street}" />
+                                                    <Span Text="{Binding StreetNumber, StringFormat=' {0}'}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                    </StackLayout>
+
+                                </StackLayout>
+                            </StackLayout>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </StackLayout>
+
+    </AbsoluteLayout>
+</ContentPage>

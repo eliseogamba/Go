@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Go.Views.AccountPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Go.ViewModels"
+    xmlns:views="clr-namespace:Go.Views"
+    x:Name="root">
+    <ContentPage.BindingContext>
+        <viewModels:AccountViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout Spacing="0">
+
+        <!--  LOGIN VIEW  -->
+        <views:LoginView IsVisible="{Binding Source={x:Reference root}, Path=BindingContext.IsLoged, Converter={StaticResource NegateBoolConveter}}" VerticalOptions="FillAndExpand" />
+
+        <!--  USER VIEW  -->
+        <views:UserView IsVisible="{Binding Source={x:Reference root}, Path=BindingContext.IsLoged}" VerticalOptions="FillAndExpand" />
+
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Go.Views.LocationsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:viewModels="clr-namespace:Go.ViewModels">
+    <NavigationPage.TitleView>
+
+        <!--  BACK ARROW  -->
+        <svg:SvgCachedImage
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            Source="back_arrow.svg"
+            WidthRequest="30">
+            <svg:SvgCachedImage.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding BackModalCommand}" />
+            </svg:SvgCachedImage.GestureRecognizers>
+        </svg:SvgCachedImage>
+
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <StackLayout Spacing="0">
+
+            <StackLayout Orientation="Horizontal" Spacing="0">
+
+                <!--  SEARCH ICON  -->
+                <svg:SvgCachedImage
+                    Margin="40,20,10,20"
+                    HeightRequest="24"
+                    Source="search.svg" />
+
+                <StackLayout
+                    Margin="10,0,60,0"
+                    HorizontalOptions="FillAndExpand"
+                    Spacing="0"
+                    VerticalOptions="CenterAndExpand">
+
+                    <!--  ENTRY FOR SEARCHING  -->
+                    <Entry
+                        Placeholder="Donde"
+                        ReturnCommand="{Binding SearchingForLocationsCommand}"
+                        ReturnType="Search"
+                        Style="{DynamicResource Search}"
+                        Text="{Binding Text}"
+                        VerticalOptions="CenterAndExpand" />
+
+                    <!--  SEPARATOR  -->
+                    <BoxView Style="{DynamicResource SeparatorStyle}" />
+
+                </StackLayout>
+
+            </StackLayout>
+
+            <!--  LOCATIONS  -->
+            <ListView
+                HasUnevenRows="True"
+                ItemsSource="{Binding Locations}"
+                SelectedItem="{Binding SelectedItem}"
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Margin="15,7.5" Spacing="0">
+
+                                <!--  LOCATION NAME  -->
+                                <Label
+                                    Style="{DynamicResource LargeLabelStyle}"
+                                    Text="{Binding Name}"
+                                    TextColor="{DynamicResource LightDarkTextColor}" />
+
+                                <!--  PROVINCE AND COUNTRY NAME  -->
+                                <Label TextColor="{DynamicResource BaseDarkTextColor}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Province.Name, StringFormat='{0},'}" />
+                                            <Span Text="{Binding Province.Country.Name, StringFormat=' {0}'}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+
+                    <!--  LOADING INDIACTOR  -->
+                    <ActivityIndicator Margin="20,10,0,0" IsVisible="{Binding IsLoading}" />
+
+                </ListView.Footer>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

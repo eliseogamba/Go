@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage
+    x:Class="Go.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:views="clr-namespace:Go.Views"
+    android:TabbedPage.ToolbarPlacement="Bottom"
+    BarBackgroundColor="White"
+    NavigationPage.HasNavigationBar="False"
+    SelectedTabColor="{DynamicResource BrandColor}"
+    UnselectedTabColor="{DynamicResource DarkTextColor}">
+
+    <NavigationPage BarBackgroundColor="White" IconImageSource="home">
+        <x:Arguments>
+            <views:EventsPage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage BarBackgroundColor="White" IconImageSource="billboard">
+        <x:Arguments>
+            <views:ActivitiesPage />
+        </x:Arguments>
+    </NavigationPage>
+    <views:MapPage IconImageSource="map" />
+    <views:AccountPage IconImageSource="account" />
+
+</TabbedPage>

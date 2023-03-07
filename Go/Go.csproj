@@ -1,0 +1,104 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Behaviors.Forms" Version="1.4.0" />
+    <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
+    <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
+    <PackageReference Include="Xamarin.Forms.Maps" Version="5.0.0.2337" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\" />
+    <None Remove="ViewModels\" />
+    <None Remove="Models\" />
+    <None Remove="Common\" />
+    <None Remove="Xamarin.FFImageLoading.Svg" />
+    <None Remove="Xamarin.FFImageLoading" />
+    <None Remove="Xamarin.FFImageLoading.Forms" />
+    <None Remove="Xamarin.FFImageLoading.Svg.Forms" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Styles\" />
+    <None Remove="Styles\Fonts\" />
+    <None Remove="Styles\Fonts\SfProBold.otf" />
+    <None Remove="Styles\Fonts\SfProRegular.otf" />
+    <None Remove="Themes\" />
+    <None Remove="Services\" />
+    <None Remove="Behaviors.Forms" />
+    <None Remove="Controls\" />
+    <None Remove="DLToolkit.Forms.Controls.FlowListView" />
+    <None Remove="Helpers\" />
+    <None Remove="Models\Response\" />
+    <None Remove="Xam.Plugin.Media" />
+    <None Remove="Views\SingUp\" />
+    <None Remove="Views\LogIn\" />
+    <None Remove="Views\Profile\" />
+    <None Remove="Views\Main\" />
+    <None Remove="Views\Occurrence\" />
+    <None Remove="ViewModels\Main\" />
+    <None Remove="ViewModels\Occurrence\" />
+    <None Remove="ViewModels\Profile\" />
+    <None Remove="ViewModels\SignIn\" />
+    <None Remove="ViewModels\SignUp\" />
+    <None Remove="ViewModels\Base\" />
+    <None Remove="Views\Profile\Popup\" />
+    <None Remove="Rg.Plugins.Popup" />
+    <None Remove="ViewModels\Profile\Popup\" />
+    <None Remove="Xamarin.Forms.Maps" />
+    <None Remove="Converters\" />
+    <None Remove="Behaviors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Models\" />
+    <Folder Include="Common\" />
+    <Folder Include="Styles\" />
+    <Folder Include="Styles\Fonts\" />
+    <Folder Include="Themes\" />
+    <Folder Include="Services\" />
+    <Folder Include="Controls\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Models\Response\" />
+    <Folder Include="Views\SingUp\" />
+    <Folder Include="Views\SignIn\" />
+    <Folder Include="Views\Profile\" />
+    <Folder Include="Views\Main\" />
+    <Folder Include="Views\Occurrence\" />
+    <Folder Include="ViewModels\Main\" />
+    <Folder Include="ViewModels\Occurrence\" />
+    <Folder Include="ViewModels\Profile\" />
+    <Folder Include="ViewModels\SignIn\" />
+    <Folder Include="ViewModels\SignUp\" />
+    <Folder Include="ViewModels\Base\" />
+    <Folder Include="Views\Profile\Popup\" />
+    <Folder Include="ViewModels\Profile\Popup\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Behaviors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Styles\Fonts\SfProBold.otf" />
+    <EmbeddedResource Include="Styles\Fonts\SfProRegular.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\SetLocation.xaml.cs">
+      <DependentUpon>SetLocation.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

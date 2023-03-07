@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Go.Views.EventsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:Go.Behaviors"
+    xmlns:controls="clr-namespace:Go.Controls"
+    xmlns:images="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:viewModels="clr-namespace:Go.ViewModels">
+    <ContentPage.BindingContext>
+        <viewModels:EventsViewModel />
+    </ContentPage.BindingContext>
+    <NavigationPage.TitleView>
+
+        <StackLayout Orientation="Horizontal" Spacing="0">
+
+            <!--  SEARCH  -->
+            <svg:SvgCachedImage
+                HeightRequest="20"
+                Source="search.svg"
+                VerticalOptions="CenterAndExpand">
+                <svg:SvgCachedImage.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="15,0,0,0" />
+                        <On Platform="Android" Value="0,0,0,0" />
+                    </OnPlatform>
+                </svg:SvgCachedImage.Margin>
+                <svg:SvgCachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SetSearcherVisibilityCommand}" />
+                </svg:SvgCachedImage.GestureRecognizers>
+            </svg:SvgCachedImage>
+
+            <!--  PAGE TITLE  -->
+            <Label
+                Margin="24,0,0,0"
+                Style="{DynamicResource BigLabelStyle}"
+                Text="Eventos"
+                VerticalTextAlignment="Center" />
+
+            <!--  FILTER ICON  -->
+            <svg:SvgCachedImage
+                HeightRequest="20"
+                HorizontalOptions="EndAndExpand"
+                Source="filter.svg">
+                <svg:SvgCachedImage.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,0,0,0" />
+                        <On Platform="Android" Value="0,0,15,0" />
+                    </OnPlatform>
+                </svg:SvgCachedImage.Margin>
+                <svg:SvgCachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding FilterCommand}" />
+                </svg:SvgCachedImage.GestureRecognizers>
+            </svg:SvgCachedImage>
+
+        </StackLayout>
+
+    </NavigationPage.TitleView>
+    <AbsoluteLayout>
+
+        <!--  EMPTY VIEW  -->
+        <svg:SvgCachedImage
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            Aspect="AspectFill"
+            IsVisible="{Binding IsEmpty}"
+            Source="{Binding EmptyImage, StringFormat='Empty{0}.svg'}" />
+
+        <!--  ELEMENTS LIST  -->
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            Spacing="0">
+
+            <!--  SEARCHER  -->
+            <StackLayout
+                Margin="50,27,50,0"
+                IsVisible="{Binding SearcherVisible}"
+                Spacing="0">
+
+                <Entry
+                    Placeholder="Buscar"
+                    ReturnCommand="{Binding LookingForEventsCommand}"
+                    ReturnType="Search"
+                    Text="{Binding Text}" />
+
+                <BoxView Style="{DynamicResource SeparatorStyle}">
+                    <BoxView.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0,10,0,0" />
+                            <On Platform="Android" Value="0,-5,0,0" />
+                        </OnPlatform>
+                    </BoxView.Margin>
+                </BoxView>
+
+            </StackLayout>
+
+            <!--  LOADER  -->
+            <controls:Loader
+                Margin="0,28,0,0"
+                CountElements="2"
+                HasUnevenRows="True"
+                IsVisible="{Binding IsLoading}"
+                SeparatorVisibility="None">
+                <controls:Loader.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <controls:AnimatedFrame
+                                Margin="15,11"
+                                Padding="0"
+                                BackgroundColor="#CACACA"
+                                CornerRadius="10"
+                                HasShadow="False"
+                                HeightRequest="260" />
+                        </ViewCell>
+                    </DataTemplate>
+                </controls:Loader.ItemTemplate>
+            </controls:Loader>
+
+            <!--  EVENTS LIST  -->
+            <ListView
+                Margin="0,28,0,0"
+                IsPullToRefreshEnabled="True"
+                IsRefreshing="{Binding IsRefreshing}"
+                ItemsSource="{Binding Elements}"
+                SelectedItem="{Binding Event, Mode=TwoWay}">
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior Command="{Binding ElementAppearingCommand}" EventName="ItemAppearing" />
+                    <behaviors:EventToCommandBehavior Command="{Binding ItemAppearingCommand}" EventName="ItemAppearing" />
+                </ListView.Behaviors>
+                <ListView.Triggers>
+                    <DataTrigger
+                        Binding="{Binding IsLoading}"
+                        TargetType="ListView"
+                        Value="True">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </ListView.Triggers>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Margin="15,11" Spacing="0">
+
+                                <!--  IMAGE  -->
+                                <Frame
+                                    Padding="0"
+                                    CornerRadius="9"
+                                    HasShadow="False"
+                                    IsClippedToBounds="true">
+
+                                    <images:CachedImage
+                                        Aspect="AspectFill"
+                                        HeightRequest="260"
+                                        LoadingPlaceholder="loading"
+                                        Source="{Binding Photo}" />
+
+                                </Frame>
+
+                                <StackLayout
+                                    Margin="0,16,0,12"
+                                    Orientation="Horizontal"
+                                    Spacing="0">
+
+                                    <!--  TITLE  -->
+                                    <Label Style="{DynamicResource BoldBigLabelStyle}" Text="{Binding Title}" />
+
+                                    <!--  AD PILL  -->
+                                    <Frame
+                                        Margin="10,0,0,0"
+                                        IsVisible="{Binding IsAd}"
+                                        Style="{DynamicResource AdFrame}">
+
+                                        <Label
+                                            Margin="10,0"
+                                            HorizontalTextAlignment="Center"
+                                            Style="{DynamicResource SmallLabelStyle}"
+                                            Text="Patrocinado"
+                                            TextColor="{DynamicResource SecondLightBackgroundColor}"
+                                            VerticalTextAlignment="Center" />
+
+                                    </Frame>
+
+                                </StackLayout>
+
+                                <!--  LOCATION  -->
+                                <StackLayout
+                                    Margin="0,0,0,8"
+                                    Orientation="Horizontal"
+                                    Spacing="0">
+
+                                    <!--  PIN IMAGE  -->
+                                    <svg:SvgCachedImage
+                                        Margin="0,0,12,0"
+                                        HeightRequest="18"
+                                        Source="pin.svg"
+                                        WidthRequest="13" />
+
+                                    <!--  ADDRESS TEXT  -->
+                                    <Label Style="{DynamicResource LightLabelStyle}">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Street}" />
+                                                <Span Text="{Binding StreetNumber, StringFormat=' {0}'}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                </StackLayout>
+
+                                <!--  TIME  -->
+                                <StackLayout Orientation="Horizontal" Spacing="0">
+
+                                    <!--  PIN IMAGE  -->
+                                    <svg:SvgCachedImage
+                                        Margin="0,0,12,0"
+                                        HeightRequest="16"
+                                        Source="calendar.svg"
+                                        WidthRequest="16" />
+
+                                    <!--  ADDRESS TEXT  -->
+                                    <Label Style="{DynamicResource LightLabelStyle}" Text="{Binding DatetimeStart, StringFormat='{0:dd/MM - hh:mm} hs.'}" />
+
+                                </StackLayout>
+
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+
+                    <!--  LOADING INDIACTOR  -->
+                    <ActivityIndicator Margin="20,10,0,0" IsVisible="{Binding IsLoading}" />
+
+                </ListView.Footer>
+            </ListView>
+
+        </StackLayout>
+
+    </AbsoluteLayout>
+</ContentPage>

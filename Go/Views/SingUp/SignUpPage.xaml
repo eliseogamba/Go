@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Go.Views.SignUpPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:viewModels="clr-namespace:Go.ViewModels"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.BindingContext>
+        <viewModels:SignUpViewModel />
+    </ContentPage.BindingContext>
+    <AbsoluteLayout>
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            Spacing="0">
+            <StackLayout.Triggers>
+                <DataTrigger
+                    Binding="{Binding IsLoading}"
+                    TargetType="StackLayout"
+                    Value="True">
+                    <Setter Property="Opacity" Value="0.1" />
+                    <Setter Property="InputTransparent" Value="True" />
+                </DataTrigger>
+            </StackLayout.Triggers>
+
+            <!--  GO LOGO  -->
+            <Image
+                HeightRequest="100"
+                Source="logo"
+                WidthRequest="100" />
+
+            <!--  USERNAME FIELD  -->
+            <Frame Margin="0,84,0,25" Style="{DynamicResource Input}">
+
+                <Entry
+                    Margin="15,0,15,0"
+                    Keyboard="Plain"
+                    Placeholder="Usuario"
+                    Text="{Binding Username}" />
+
+            </Frame>
+
+
+            <StackLayout
+                Margin="0,0,0,30"
+                Orientation="Horizontal"
+                Spacing="0"
+                WidthRequest="360">
+
+                <!--  FIRSTNAME FIELD  -->
+                <Frame Margin="0,0,10,0" Style="{DynamicResource Input}">
+
+                    <Entry
+                        Margin="15,0,15,0"
+                        Placeholder="Nombre"
+                        Text="{Binding Name}" />
+
+                </Frame>
+
+                <!--  LASTNAME FIELD  -->
+                <Frame Margin="10,0,0,0" Style="{DynamicResource Input}">
+
+                    <Entry
+                        Margin="15,0,15,0"
+                        Placeholder="Apellido"
+                        Text="{Binding Lastname}" />
+
+                </Frame>
+
+            </StackLayout>
+
+            <!--  EMAIL FIELD  -->
+            <Frame Margin="0,0,0,30" Style="{DynamicResource Input}">
+
+                <Entry
+                    Margin="15,0,15,0"
+                    Keyboard="Email"
+                    Placeholder="Email"
+                    Text="{Binding Email}" />
+
+            </Frame>
+
+            <!--  PASSWORD FIELD  -->
+            <Frame Style="{DynamicResource Input}">
+
+                <Entry
+                    Margin="15,0,15,0"
+                    IsPassword="True"
+                    Placeholder="Password"
+                    Text="{Binding Password}" />
+
+            </Frame>
+
+            <!--  SIGN UP BUTTON  -->
+            <Button
+                Margin="0,32,0,0"
+                Command="{Binding SignUpCommand}"
+                HorizontalOptions="FillAndExpand"
+                Text="Crear"
+                WidthRequest="-1" />
+
+        </StackLayout>
+
+        <ActivityIndicator
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsLoading}" />
+
+    </AbsoluteLayout>
+</ContentPage>

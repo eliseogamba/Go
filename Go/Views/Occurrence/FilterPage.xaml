@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Go.Views.FilterPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:control="clr-namespace:Go.Controls"
+    xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="0">
+
+            <!--  CLOSE ICON  -->
+            <svg:SvgCachedImage
+                HeightRequest="15"
+                Source="close.svg"
+                VerticalOptions="CenterAndExpand">
+                <svg:SvgCachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackModalCommand}" />
+                </svg:SvgCachedImage.GestureRecognizers>
+            </svg:SvgCachedImage>
+
+            <!--  FILTER TEXT  -->
+            <Label
+                Margin="25,0,0,0"
+                Style="{DynamicResource BoldBigLabelStyle}"
+                Text="Filtros"
+                VerticalTextAlignment="Center" />
+
+            <!--  CHECK ICON  -->
+            <svg:SvgCachedImage
+                Margin="0,0,20,0"
+                HeightRequest="15"
+                HorizontalOptions="EndAndExpand"
+                Source="check.svg"
+                VerticalOptions="CenterAndExpand">
+                <svg:SvgCachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ApplyFilterCommand}" />
+                </svg:SvgCachedImage.GestureRecognizers>
+            </svg:SvgCachedImage>
+
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ScrollView>
+        <StackLayout Spacing="0">
+
+            <!--  WHERE TITLE  -->
+            <Label
+                Margin="35"
+                Style="{DynamicResource LightLargeLabelStyle}"
+                Text="¿Dónde?" />
+
+            <!--  LOCATION NAME  -->
+            <Label Margin="35,0,0,0" Style="{DynamicResource MediumLabelStyle}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding Location.Name, StringFormat='{0},'}" />
+                        <Span Text="{Binding Location.Province.Name, StringFormat=' {0},'}" />
+                        <Span Text="{Binding Location.Province.Country.Name, StringFormat=' {0}'}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <!--  CHANGE LOCATION  -->
+            <Label
+                Margin="35,5,0,0"
+                Style="{DynamicResource SmallLabelStyle}"
+                Text="Cambiar"
+                TextColor="{DynamicResource BrandColor}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeLocationCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <StackLayout Spacing="0">
+                <StackLayout.Triggers>
+                    <DataTrigger
+                        Binding="{Binding HideWhen}"
+                        TargetType="StackLayout"
+                        Value="True">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </StackLayout.Triggers>
+
+                <!--  WHEN TITLE  -->
+                <Label
+                    Margin="35,35,35,20"
+                    Style="{DynamicResource LightLargeLabelStyle}"
+                    Text="¿Cuándo?" />
+
+                <!--  TIME RANGES  -->
+                <flv:FlowListView
+                    Margin="35,0"
+                    FlowColumnCount="2"
+                    FlowItemsSource="{Binding TimeRanges}"
+                    FlowLastTappedItem="{Binding TimeRange}"
+                    HasUnevenRows="False"
+                    HeightRequest="165"
+                    SeparatorVisibility="None"
+                    VerticalScrollBarVisibility="Never">
+                    <flv:FlowListView.FlowColumnTemplate>
+                        <DataTemplate>
+
+                            <Frame
+                                Padding="25,5"
+                                BorderColor="{DynamicResource SelectedColor}"
+                                CornerRadius="17"
+                                HasShadow="False"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Start">
+                                <Frame.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding IsSelected}"
+                                        TargetType="Frame"
+                                        Value="True">
+                                        <Setter Property="BackgroundColor" Value="{DynamicResource SelectedColor}" />
+                                    </DataTrigger>
+                                </Frame.Triggers>
+
+                                <!--  TIME RANGE NAME  -->
+                                <Label
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Name}"
+                                    VerticalTextAlignment="Center">
+                                    <Label.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsSelected}"
+                                            TargetType="Label"
+                                            Value="True">
+                                            <Setter Property="TextColor" Value="{DynamicResource LightBackgroundColor}" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+
+                            </Frame>
+
+                        </DataTemplate>
+                    </flv:FlowListView.FlowColumnTemplate>
+                </flv:FlowListView>
+
+            </StackLayout>
+
+            <!--  WHAT TITLE  -->
+            <Label
+                Margin="35,35,35,20"
+                Style="{DynamicResource LightLargeLabelStyle}"
+                Text="¿Qué?" />
+
+            <!--  CATEGORIES  -->
+            <flv:FlowListView
+                Margin="35,0,35,20"
+                FlowColumnCount="3"
+                FlowItemsSource="{Binding Categories}"
+                HasUnevenRows="True"
+                HeightRequest="300"
+                SeparatorVisibility="None">
+                <flv:FlowListView.FlowColumnTemplate>
+                    <DataTemplate>
+
+                        <StackLayout Spacing="0">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SelectionToogleCommand}" />
+                            </StackLayout.GestureRecognizers>
+
+                            <!--  CATEGORY ICON  -->
+                            <control:ChangeableSvgCachedImage
+                                HeightRequest="40"
+                                HorizontalOptions="CenterAndExpand"
+                                IsSelected="{Binding IsSelected, Mode=TwoWay}"
+                                Source="{Binding Icon}"
+                                VerticalOptions="Start"
+                                WidthRequest="40" />
+
+                            <!--  CATEGORY NAME  -->
+                            <Label
+                                Margin="0,10"
+                                HorizontalTextAlignment="Center"
+                                Style="{DynamicResource LightLabelStyle}"
+                                Text="{Binding Name}">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding IsSelected}"
+                                        TargetType="Label"
+                                        Value="True">
+                                        <Setter Property="TextColor" Value="{DynamicResource BrandColor}" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                        </StackLayout>
+
+                    </DataTemplate>
+                </flv:FlowListView.FlowColumnTemplate>
+            </flv:FlowListView>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Go.Views.StatisticsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    NavigationPage.HasBackButton="False">
+    <NavigationPage.TitleView>
+
+        <StackLayout Orientation="Horizontal" Spacing="0">
+
+            <!--  BACK ARROW  -->
+            <svg:SvgCachedImage
+                HeightRequest="30"
+                HorizontalOptions="Start"
+                Source="back_arrow.svg"
+                WidthRequest="30">
+                <svg:SvgCachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommand}" />
+                </svg:SvgCachedImage.GestureRecognizers>
+            </svg:SvgCachedImage>
+
+            <!--  TITLE  -->
+            <Label
+                Margin="15,0,0,0"
+                Style="{DynamicResource MediumLabelStyle}"
+                Text="Estadísticas"
+                VerticalTextAlignment="Center" />
+
+        </StackLayout>
+
+    </NavigationPage.TitleView>
+    <StackLayout Spacing="0">
+
+        <!--  MAIN IMAGE  -->
+        <svg:SvgCachedImage
+            Margin="0,85,0,0"
+            HeightRequest="120"
+            HorizontalOptions="Center"
+            Source="research.svg"
+            WidthRequest="120" />
+
+        <!--  SEPARATOR  -->
+        <BoxView
+            Margin="70,80,70,0"
+            HeightRequest="3"
+            Style="{DynamicResource SeparatorStyle}" />
+
+        <FlexLayout JustifyContent="SpaceAround">
+
+
+            <!--  VIEWS  -->
+            <StackLayout Spacing="0">
+
+                <!--  NUMBER OF VIEWS  -->
+                <Label
+                    FontSize="80"
+                    HorizontalTextAlignment="Center"
+                    Style="{DynamicResource BoldLargeLabelStyle}"
+                    Text="{Binding Occurrence.Views}" />
+
+                <!--  VISTAS TEXT  -->
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Style="{DynamicResource BigLabelStyle}"
+                    Text="Vistas" />
+
+            </StackLayout>
+
+            <!--  OPENINGS  -->
+            <StackLayout Spacing="0">
+
+                <!--  NUMBER OF OPENINGS  -->
+                <Label
+                    FontSize="80"
+                    HorizontalTextAlignment="Center"
+                    Style="{DynamicResource BoldLargeLabelStyle}"
+                    Text="{Binding Occurrence.Openings}" />
+
+                <!--  VISTAS TEXT  -->
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Style="{DynamicResource BigLabelStyle}"
+                    Text="Aperturas" />
+
+            </StackLayout>
+
+
+        </FlexLayout>
+
+        <!--  AD BUTTON  -->
+        <Button
+            Margin="71,40,71,0"
+            Command="{Binding AdCommand}"
+            HeightRequest="35"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding Occurrence.IsAd, Converter={StaticResource NegateBoolConveter}}"
+            Text="Publicitar Evento"
+            WidthRequest="-1" />
+
+        <StackLayout
+            Margin="0,40,0,0"
+            IsVisible="{Binding Occurrence.IsAd}"
+            Spacing="0">
+
+            <!--  EVENT/ACTIVITY AD  -->
+            <StackLayout
+                HorizontalOptions="CenterAndExpand"
+                Orientation="Horizontal"
+                Spacing="0">
+
+                <!--  CHECKED ICON  -->
+                <svg:SvgCachedImage
+                    Margin="0,0,19,0"
+                    HeightRequest="48"
+                    Source="checked.svg"
+                    WidthRequest="48" />
+
+                <!--  KIND TEXT  -->
+                <Label
+                    Style="{DynamicResource BigLabelStyle}"
+                    Text="{Binding Kind}"
+                    VerticalTextAlignment="Center" />
+
+            </StackLayout>
+
+            <!--  AD TO DATE  -->
+            <Label
+                Margin="0,14,0,0"
+                HorizontalTextAlignment="Center"
+                Style="{DynamicResource LargeLabelStyle}"
+                Text="{Binding Occurrence.AdTo, StringFormat='Fin de publicidad: {0:dd/MM/yyyy}'}" />
+
+        </StackLayout>
+
+    </StackLayout>
+</ContentPage>

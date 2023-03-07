@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    x:Class="Go.Themes.DefaultTheme"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Color x:Key="BaseDarkTextColor">#989898</Color>
+    <Color x:Key="LightBackgroundColor">#EBEBEB</Color>
+    <Color x:Key="SecondLightBackgroundColor">#F2F2F2</Color>
+    <Color x:Key="DarkBackgroundColor">#6A6A6A</Color>
+    <Color x:Key="PlaceholderColor">#707070</Color>
+    <Color x:Key="DarkTextColor">Black</Color>
+    <Color x:Key="LightDarkTextColor">#313131</Color>
+    <Color x:Key="BrandColor">#ED1C24</Color>
+    <Color x:Key="SelectedColor">#40454F</Color>
+    <Color x:Key="SecondLightDarkColor">#8B8B8B</Color>
+
+</ResourceDictionary>

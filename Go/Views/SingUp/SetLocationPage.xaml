@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Go.Views.SetLocationPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:viewModels="clr-namespace:Go.ViewModels"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.BindingContext>
+        <viewModels:SetLocationViewModel />
+    </ContentPage.BindingContext>
+    <AbsoluteLayout>
+
+        <!--  BG IMAGE  -->
+        <svg:SvgCachedImage
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            Aspect="AspectFill"
+            Source="Location.svg" />
+
+        <!--  SELECT LOCATION AREA  -->
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0,0.85,1,AutoSize"
+            AbsoluteLayout.LayoutFlags="WidthProportional,PositionProportional"
+            Spacing="0">
+
+            <!--  SELECTED LOCATION  -->
+            <Frame
+                Margin="0,0,0,36"
+                Padding="0"
+                BackgroundColor="{DynamicResource LightBackgroundColor}"
+                CornerRadius="9"
+                HasShadow="False"
+                HeightRequest="38"
+                HorizontalOptions="Center"
+                WidthRequest="266">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding PickLocationCommand}" />
+                </Frame.GestureRecognizers>
+
+                <!--  LOCATION TEXT  -->
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Text="Ej. Rosario"
+                    TextColor="{DynamicResource BaseDarkTextColor}"
+                    VerticalTextAlignment="Center">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding HasLocation}"
+                            TargetType="Label"
+                            Value="True">
+                            <Setter Property="Text" Value="{Binding Location.Name}" />
+                            <Setter Property="TextColor" Value="{DynamicResource DarkTextColor}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+
+            </Frame>
+
+            <!--  CONFIRM BUTTON  -->
+            <Button
+                BackgroundColor="{DynamicResource BaseDarkTextColor}"
+                Command="{Binding StartAppCommand}"
+                InputTransparent="True"
+                Text="Confirmar">
+                <Button.Triggers>
+                    <DataTrigger
+                        Binding="{Binding HasLocation}"
+                        TargetType="Button"
+                        Value="True">
+                        <Setter Property="BackgroundColor" Value="{DynamicResource BrandColor}" />
+                        <Setter Property="InputTransparent" Value="False" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+
+        </StackLayout>
+
+    </AbsoluteLayout>
+</ContentPage>

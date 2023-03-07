@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Go.Views.OnboardingPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:viewModels="clr-namespace:Go.ViewModels"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.BindingContext>
+        <viewModels:OnboardingViewModel />
+    </ContentPage.BindingContext>
+
+    <AbsoluteLayout>
+
+        <!--  ONBOARDING FIRST IMAGE  -->
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            IsVisible="{Binding FirstOnboardingVisible}"
+            Spacing="0">
+
+            <StackLayout Spacing="0" VerticalOptions="CenterAndExpand">
+                <!--  EVENT ONBOARDING IMAGE  -->
+                <svg:SvgCachedImage
+                    Aspect="AspectFit"
+                    HeightRequest="400"
+                    Source="Onboarding1.svg" />
+
+                <!--  EVENTS TITLE  -->
+                <Label
+                    Margin="0,33,0,9"
+                    HorizontalTextAlignment="Center"
+                    Style="{DynamicResource BigLabelStyle}"
+                    Text="Eventos" />
+
+                <!--  EVENTS DETAILS  -->
+                <Label
+                    Margin="80,0"
+                    HorizontalTextAlignment="Center"
+                    TextColor="{DynamicResource DarkBackgroundColor}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="En esta pantalla te mostraremos todos los" />
+                            <Span Style="{DynamicResource BoldLabelStyle}" Text=" eventos de tu ubicación con la fecha y el detalle" />
+                            <Span Text=" de los mismos." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <!--  GO TO ONBOARDING 2  -->
+                <Button
+                    Margin="0,30,0,0"
+                    Command="{Binding ShowOnboadringTwoCommand}"
+                    Text="Continuar" />
+
+            </StackLayout>
+
+        </StackLayout>
+
+        <!--  ONBOARDING SECOND IMAGE  -->
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            IsVisible="{Binding SecondOnboardingVisible}"
+            Spacing="0">
+
+            <StackLayout Spacing="0" VerticalOptions="CenterAndExpand">
+                <!--  ACTIVITY ONBOARDING IMAGE  -->
+                <svg:SvgCachedImage
+                    Aspect="AspectFit"
+                    HeightRequest="400"
+                    Source="Onboarding2.svg" />
+
+                <!--  EVENTS TITLE  -->
+                <Label
+                    Margin="0,33,0,9"
+                    HorizontalTextAlignment="Center"
+                    Style="{DynamicResource BigLabelStyle}"
+                    Text="Actividades" />
+
+                <!--  ACTIVITIES DETAILS  -->
+                <Label
+                    Margin="120,0"
+                    HorizontalTextAlignment="Center"
+                    TextColor="{DynamicResource DarkBackgroundColor}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{DynamicResource BoldLabelStyle}" Text="Todo lo que haya para hacer cerca tuyo " />
+                            <Span Text="lo mostraremos en la pantalla de actividades." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <!--  GO TO ONBOARDING 2  -->
+                <Button
+                    Margin="0,30,0,0"
+                    Command="{Binding StartAppCommand}"
+                    Text="Continuar" />
+
+            </StackLayout>
+
+        </StackLayout>
+
+    </AbsoluteLayout>
+
+</ContentPage>

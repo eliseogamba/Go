@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<popup:PopupPage
+    x:Class="Go.Views.OptionsPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    HasSystemPadding="False">
+    <popup:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Bottom"
+            PositionOut="Bottom" />
+    </popup:PopupPage.Animation>
+    <AbsoluteLayout>
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            Spacing="0">
+            <StackLayout.Triggers>
+                <DataTrigger
+                    Binding="{Binding IsLoading}"
+                    TargetType="StackLayout"
+                    Value="True">
+                    <Setter Property="Opacity" Value="0.1" />
+                    <Setter Property="InputTransparent" Value="True" />
+                </DataTrigger>
+            </StackLayout.Triggers>
+
+
+            <Frame
+                Padding="0"
+                CornerRadius="14"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="EndAndExpand">
+
+                <StackLayout Margin="0,0,0,40" Spacing="0">
+
+                    <StackLayout Orientation="Horizontal" Spacing="0">
+
+                        <!--  TITLE  -->
+                        <Label
+                            Margin="20,20,0,20"
+                            Style="{DynamicResource BoldMediumLabelStyle}"
+                            Text="Acciones" />
+
+                        <svg:SvgCachedImage
+                            Margin="0,0,20,0"
+                            HeightRequest="12.5"
+                            HorizontalOptions="EndAndExpand"
+                            Source="close.svg"
+                            VerticalOptions="CenterAndExpand"
+                            WidthRequest="12.5">
+                            <svg:SvgCachedImage.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BackPopupCommand}" />
+                            </svg:SvgCachedImage.GestureRecognizers>
+                        </svg:SvgCachedImage>
+
+                    </StackLayout>
+
+                    <!--  SEPARATOR  -->
+                    <BoxView Style="{DynamicResource SeparatorStyle}" />
+
+                    <!--  STATUS AREA  -->
+                    <StackLayout
+                        Margin="20,30,0,0"
+                        Orientation="Horizontal"
+                        Spacing="0">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding StatusCommand}" />
+                        </StackLayout.GestureRecognizers>
+
+                        <svg:SvgCachedImage HeightRequest="20" Source="status.svg" />
+
+                        <Label
+                            Margin="10,0,0,0"
+                            Style="{DynamicResource MediumLabelStyle}"
+                            Text="Desactivar"
+                            VerticalTextAlignment="Center">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Occurrence.Active}"
+                                    TargetType="Label"
+                                    Value="False">
+                                    <Setter Property="Text" Value="Activar" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+
+                    </StackLayout>
+
+                    <!--  EDIT AREA  -->
+                    <StackLayout
+                        Margin="20,30,0,0"
+                        Orientation="Horizontal"
+                        Spacing="0">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EditCommand}" />
+                        </StackLayout.GestureRecognizers>
+
+                        <svg:SvgCachedImage HeightRequest="20" Source="edit.svg" />
+
+                        <Label
+                            Margin="10,0,0,0"
+                            Style="{DynamicResource MediumLabelStyle}"
+                            Text="Editar"
+                            VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+
+                    <!--  STATIDISTICS AREA  -->
+                    <StackLayout
+                        Margin="20,30,0,0"
+                        Orientation="Horizontal"
+                        Spacing="0">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding StatisticsCommand}" />
+                        </StackLayout.GestureRecognizers>
+
+                        <svg:SvgCachedImage HeightRequest="20" Source="statistics.svg" />
+
+                        <Label
+                            Margin="10,0,0,0"
+                            Style="{DynamicResource MediumLabelStyle}"
+                            Text="Estadísticas"
+                            VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+                </StackLayout>
+
+            </Frame>
+        </StackLayout>
+
+        <ActivityIndicator
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsLoading}" />
+
+    </AbsoluteLayout>
+</popup:PopupPage>

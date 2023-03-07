@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Go.Views.EditOccurrencePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:Go.Models"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    NavigationPage.HasBackButton="False">
+    <NavigationPage.TitleView>
+
+        <StackLayout Orientation="Horizontal" Spacing="0">
+
+            <!--  BACK ARROW  -->
+            <svg:SvgCachedImage
+                HeightRequest="30"
+                HorizontalOptions="Start"
+                Source="back_arrow.svg"
+                WidthRequest="30">
+                <svg:SvgCachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommand}" />
+                </svg:SvgCachedImage.GestureRecognizers>
+            </svg:SvgCachedImage>
+
+            <!--  TITLE  -->
+            <Label
+                Margin="15,0,0,0"
+                Style="{DynamicResource MediumLabelStyle}"
+                Text="Editar publicación"
+                VerticalTextAlignment="Center" />
+
+        </StackLayout>
+
+    </NavigationPage.TitleView>
+    <AbsoluteLayout>
+
+        <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <ScrollView.Triggers>
+                <DataTrigger
+                    Binding="{Binding IsLoading}"
+                    TargetType="ScrollView"
+                    Value="True">
+                    <Setter Property="Opacity" Value="0.1" />
+                    <Setter Property="InputTransparent" Value="True" />
+                </DataTrigger>
+            </ScrollView.Triggers>
+
+            <StackLayout Spacing="0">
+
+                <!--  INFORMATION TITLE  -->
+                <Label
+                    Margin="0,20,0,20"
+                    HorizontalTextAlignment="Center"
+                    Style="{DynamicResource LargeLabelStyle}"
+                    Text="Información" />
+
+                <!--  TITLE FIELD  -->
+                <Frame Style="{DynamicResource Input}" WidthRequest="350">
+
+                    <Entry
+                        Margin="15,0,15,0"
+                        Placeholder="Título"
+                        Text="{Binding Occurrence.Title}" />
+
+                </Frame>
+
+                <!--  FIELD DESCRIPTION  -->
+                <Label
+                    Margin="50,5,0,0"
+                    Text="Sé claro y descriptivo"
+                    TextColor="{DynamicResource SelectedColor}" />
+
+                <!--  DESCIPRTION FIELD  -->
+                <Frame
+                    Margin="0,20,0,0"
+                    Style="{DynamicResource EditorInput}"
+                    WidthRequest="350">
+
+                    <Editor
+                        Margin="15"
+                        Placeholder="Descripción"
+                        Text="{Binding Occurrence.Description}" />
+
+                </Frame>
+
+                <!--  FIELD DESCRIPTION  -->
+                <Label
+                    Margin="50,5,0,0"
+                    Text="Indica los detalles más importantes aquí"
+                    TextColor="{DynamicResource SelectedColor}" />
+
+                <!--  IMAGE FIELD  -->
+                <Frame
+                    Margin="0,20,0,0"
+                    Style="{DynamicResource Input}"
+                    WidthRequest="350">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PickPhotoCommand}" />
+                    </Frame.GestureRecognizers>
+
+                    <StackLayout Orientation="Horizontal" Spacing="0">
+
+                        <!--  PHOTO IMAGE  -->
+                        <svg:SvgCachedImage
+                            Margin="15,0,5,0"
+                            HeightRequest="20"
+                            Source="image.svg"
+                            VerticalOptions="CenterAndExpand" />
+
+                        <!--  PHOTO TITLE  -->
+                        <Label
+                            Style="{DynamicResource MediumLabelStyle}"
+                            Text="Imagen"
+                            TextColor="{DynamicResource PlaceholderColor}"
+                            VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+
+                </Frame>
+
+                <Label
+                    Margin="45,5,0,10"
+                    Style="{DynamicResource SmallLabelStyle}"
+                    Text="{Binding PhotoName}"
+                    TextColor="{DynamicResource BaseDarkTextColor}" />
+
+                <!--  FIELD DESCRIPTION  -->
+                <Label
+                    Margin="50,0,50,0"
+                    Text="Es indispensable que la imagen tenga muy buena resolución."
+                    TextColor="{DynamicResource SelectedColor}" />
+
+                <!--  CHARACTERISTICS TITLE  -->
+                <Label
+                    Margin="0,40,0,0"
+                    HorizontalTextAlignment="Center"
+                    Style="{DynamicResource LargeLabelStyle}"
+                    Text="Características" />
+
+                <!--  CATEGORIES FIELD  -->
+                <Frame
+                    Margin="0,20,0,0"
+                    Style="{DynamicResource Input}"
+                    WidthRequest="350">
+
+                    <Picker
+                        Title="Categoría"
+                        Margin="15,0,15,0"
+                        ItemDisplayBinding="{Binding Name}"
+                        ItemsSource="{Binding Categories}"
+                        SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" />
+
+                </Frame>
+
+                <StackLayout>
+                    <StackLayout.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Type}"
+                            TargetType="StackLayout"
+                            Value="{x:Type models:Activity}">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </StackLayout.Triggers>
+
+                    <!--  DATETIME START  -->
+                    <StackLayout
+                        Margin="40,0"
+                        Orientation="Horizontal"
+                        Spacing="0">
+
+                        <!--  DATE  -->
+                        <Frame
+                            Margin="0,20,10,0"
+                            HorizontalOptions="FillAndExpand"
+                            Style="{DynamicResource Input}"
+                            WidthRequest="-1">
+
+                            <DatePicker Margin="15,0,15,0" Date="{Binding Occurrence.DatetimeStart}" />
+
+                        </Frame>
+
+                        <!--  TIME  -->
+                        <Frame
+                            Margin="10,20,0,0"
+                            HorizontalOptions="FillAndExpand"
+                            Style="{DynamicResource Input}"
+                            WidthRequest="-1">
+
+                            <TimePicker Margin="15,0,15,0" Time="{Binding TimeStart}" />
+
+                        </Frame>
+
+                    </StackLayout>
+
+                    <!--  FIELD DESCRIPTION  -->
+                    <Label
+                        Margin="50,5,0,0"
+                        Style="{DynamicResource SmallLabelStyle}"
+                        Text="¿Cuándo comienza?"
+                        TextColor="{DynamicResource SelectedColor}" />
+
+                    <!--  SAME DAY CHECKBOX  -->
+                    <StackLayout
+                        Margin="50,0,0,0"
+                        Orientation="Horizontal"
+                        Spacing="0">
+
+                        <CheckBox IsChecked="{Binding IsSameDay}" Color="{DynamicResource BrandColor}" />
+
+                        <Label
+                            Style="{DynamicResource SmallLabelStyle}"
+                            Text="Termina en el mismo dia"
+                            VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+
+                    <!--  DATETIME END  -->
+                    <StackLayout
+                        Margin="40,0"
+                        IsVisible="{Binding IsSameDay, Converter={x:StaticResource NegateBoolConveter}}"
+                        Orientation="Horizontal"
+                        Spacing="0">
+
+                        <!--  DATE  -->
+                        <Frame
+                            Margin="0,0,10,0"
+                            HorizontalOptions="FillAndExpand"
+                            Style="{DynamicResource Input}"
+                            WidthRequest="-1">
+
+                            <DatePicker Margin="15,0,15,0" Date="{Binding Occurrence.DatetimeEnd}" />
+
+                        </Frame>
+
+                        <!--  TIME  -->
+                        <Frame
+                            Margin="10,0,0,0"
+                            HorizontalOptions="FillAndExpand"
+                            Style="{DynamicResource Input}"
+                            WidthRequest="-1">
+
+                            <TimePicker Margin="15,0,15,0" Time="{Binding TimeEnd}" />
+
+                        </Frame>
+
+                    </StackLayout>
+
+                    <!--  FIELD DESCRIPTION  -->
+                    <Label
+                        Margin="50,5,0,0"
+                        IsVisible="{Binding IsSameDay, Converter={x:StaticResource NegateBoolConveter}}"
+                        Style="{DynamicResource SmallLabelStyle}"
+                        Text="¿Cuándo termina?"
+                        TextColor="{DynamicResource SelectedColor}" />
+
+                </StackLayout>
+
+                <!--  UBICATION TITLE  -->
+                <Label
+                    Margin="0,20,0,20"
+                    HorizontalTextAlignment="Center"
+                    Style="{DynamicResource LargeLabelStyle}"
+                    Text="Ubicación" />
+
+
+                <!--  PLACE FIELD  -->
+                <Frame Style="{DynamicResource Input}" WidthRequest="350">
+                    <Frame.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Type}"
+                            TargetType="Frame"
+                            Value="{x:Type models:Activity}">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Frame.Triggers>
+
+                    <Entry
+                        Margin="15,0,15,0"
+                        Placeholder="Lugar"
+                        Text="{Binding Occurrence.Place}" />
+
+                </Frame>
+
+                <!--  FIELD DESCRIPTION  -->
+                <Label
+                    Margin="50,5,0,0"
+                    Text="Por ejemplo, Alto Rosario Shopping."
+                    TextColor="{DynamicResource SelectedColor}">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Type}"
+                            TargetType="Label"
+                            Value="{x:Type models:Activity}">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+
+                <!--  STREET  -->
+                <StackLayout
+                    Margin="40,0"
+                    Orientation="Horizontal"
+                    Spacing="0">
+
+                    <!--  STREET  -->
+                    <Frame
+                        Margin="0,20,10,0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{DynamicResource Input}"
+                        WidthRequest="-1">
+
+                        <Entry
+                            Margin="15,0,15,0"
+                            Placeholder="Calle"
+                            Text="{Binding Occurrence.Street}" />
+
+                    </Frame>
+
+                    <!--  STREET NUMBER  -->
+                    <Frame
+                        Margin="10,20,0,0"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{DynamicResource Input}"
+                        WidthRequest="-1">
+
+                        <Entry
+                            Margin="15,0,15,0"
+                            Placeholder="Altura"
+                            Text="{Binding Occurrence.StreetNumber}" />
+
+                    </Frame>
+
+                </StackLayout>
+
+                <!--  FIELD DESCRIPTION  -->
+                <Label
+                    Margin="50,5,0,0"
+                    Style="{DynamicResource SmallLabelStyle}"
+                    Text="Indicanos la dirección"
+                    TextColor="{DynamicResource SelectedColor}" />
+
+                <!--  COUNTRY FIELD  -->
+                <Frame
+                    Margin="0,20,0,0"
+                    Style="{DynamicResource Input}"
+                    WidthRequest="350">
+
+                    <Picker
+                        Title="País"
+                        Margin="15,0,15,0"
+                        ItemDisplayBinding="{Binding Name}"
+                        ItemsSource="{Binding Countries}"
+                        SelectedItem="{Binding SelectedCountry}" />
+
+                </Frame>
+
+                <!--  PROVINCE FIELD  -->
+                <Frame
+                    Margin="0,20,0,0"
+                    Style="{DynamicResource Input}"
+                    WidthRequest="350">
+
+                    <Picker
+                        Title="Provincia"
+                        Margin="15,0,15,0"
+                        ItemDisplayBinding="{Binding Name}"
+                        ItemsSource="{Binding Provinces}"
+                        SelectedItem="{Binding SelectedProvince}" />
+
+                </Frame>
+
+                <!--  LOCATION FIELD  -->
+                <Frame
+                    Margin="0,20,0,0"
+                    Style="{DynamicResource Input}"
+                    WidthRequest="350">
+
+                    <Picker
+                        Title="Ciudad"
+                        Margin="15,0,15,0"
+                        ItemDisplayBinding="{Binding Name}"
+                        ItemsSource="{Binding Locations}"
+                        SelectedItem="{Binding SelectedLocation}" />
+
+                </Frame>
+
+                <Button
+                    Margin="50,40"
+                    Command="{Binding EditCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Editar"
+                    WidthRequest="-1" />
+
+            </StackLayout>
+        </ScrollView>
+
+        <ActivityIndicator
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsLoading}" />
+
+    </AbsoluteLayout>
+</ContentPage>

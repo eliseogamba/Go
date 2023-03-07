@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Go.Views.OccurrencePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:images="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:map="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    NavigationPage.HasNavigationBar="False">
+    <AbsoluteLayout>
+
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            VerticalOptions="FillAndExpand">
+            <StackLayout.Triggers>
+                <DataTrigger
+                    Binding="{Binding IsLoading}"
+                    TargetType="StackLayout"
+                    Value="True">
+                    <Setter Property="Opacity" Value="0.1" />
+                    <Setter Property="InputTransparent" Value="True" />
+                </DataTrigger>
+            </StackLayout.Triggers>
+
+            <ScrollView Orientation="Vertical">
+
+                <StackLayout Orientation="Vertical" Spacing="0">
+
+                    <AbsoluteLayout>
+
+                        <!--  PHOTO  -->
+                        <images:CachedImage
+                            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                            AbsoluteLayout.LayoutFlags="All"
+                            Aspect="AspectFill"
+                            HeightRequest="266"
+                            LoadingPlaceholder="eventplaceholder"
+                            Source="{Binding Occurrence.Photo}" />
+
+                        <!--  BACK ARROW  -->
+                        <Frame
+                            Margin="20,45,0,0"
+                            Padding="8"
+                            AbsoluteLayout.LayoutBounds="0,0,54,79"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            BackgroundColor="{DynamicResource LightBackgroundColor}"
+                            CornerRadius="18"
+                            HasShadow="False">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BackCommand}" />
+                            </Frame.GestureRecognizers>
+
+                            <svg:SvgCachedImage Source="back_arrow.svg" />
+
+                        </Frame>
+
+                    </AbsoluteLayout>
+
+                    <!--  CATEGORY  -->
+                    <Label
+                        Margin="20,17,0,0"
+                        Text="{Binding Occurrence.Category.Name, StringFormat='#{0}'}"
+                        TextColor="{DynamicResource PlaceholderColor}" />
+
+                    <!--  TITLE  -->
+                    <StackLayout
+                        Margin="20,13,20,25"
+                        Orientation="Horizontal"
+                        Spacing="0">
+
+                        <!--  TITLE TEXT  -->
+                        <Label
+                            Style="{DynamicResource BigLabelStyle}"
+                            Text="{Binding Occurrence.Title}"
+                            TextColor="{DynamicResource DarkTextColor}"
+                            VerticalOptions="CenterAndExpand"
+                            VerticalTextAlignment="Center" />
+
+                        <!--  LIKE ICON  -->
+                        <svg:SvgCachedImage
+                            HeightRequest="20"
+                            HorizontalOptions="EndAndExpand"
+                            Source="favorite_heart.svg"
+                            VerticalOptions="CenterAndExpand">
+                            <svg:SvgCachedImage.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetFavoriteCommand}" />
+                            </svg:SvgCachedImage.GestureRecognizers>
+                            <svg:SvgCachedImage.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Occurrence.IsFavorite, Mode=TwoWay}"
+                                    TargetType="svg:SvgCachedImage"
+                                    Value="True">
+                                    <Setter Property="Source" Value="filled_heart.svg" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding Occurrence.IsFavorite, Mode=TwoWay}"
+                                    TargetType="svg:SvgCachedImage"
+                                    Value="False">
+                                    <Setter Property="Source" Value="favorite_heart.svg" />
+                                </DataTrigger>
+                            </svg:SvgCachedImage.Triggers>
+                        </svg:SvgCachedImage>
+
+                    </StackLayout>
+
+                    <!--  DATETIME  -->
+                    <StackLayout
+                        BackgroundColor="{DynamicResource SecondLightBackgroundColor}"
+                        IsVisible="{Binding Occurrence.HasDate}"
+                        Spacing="0">
+
+                        <!--  DATE AREA  -->
+                        <StackLayout Margin="18,12,0,7" Orientation="Horizontal">
+
+                            <!--  CALENDAR ICON  -->
+                            <svg:SvgCachedImage
+                                HeightRequest="20"
+                                Source="calendar.svg"
+                                WidthRequest="20" />
+
+                            <!--  DATETIME START  -->
+                            <Label
+                                Style="{DynamicResource LightSmallLabelStyle}"
+                                Text="{Binding Occurrence.DatetimeStart, StringFormat='{0:dd MMM yyyy} -'}"
+                                VerticalTextAlignment="Center" />
+
+                            <!--  DATETIME END  -->
+                            <Label
+                                Style="{DynamicResource LightSmallLabelStyle}"
+                                Text="{Binding Occurrence.DatetimeEnd, StringFormat=' {0:dd MMM yyyy}'}"
+                                VerticalTextAlignment="Center" />
+
+                        </StackLayout>
+
+                        <!--  TIME AREA  -->
+                        <StackLayout Margin="18,0,0,15" Orientation="Horizontal">
+
+                            <!--  TIME ICON  -->
+                            <svg:SvgCachedImage
+                                HeightRequest="20"
+                                Source="time.svg"
+                                WidthRequest="20" />
+
+                            <Label
+                                Style="{DynamicResource LightSmallLabelStyle}"
+                                Text="{Binding Occurrence.DatetimeStart, StringFormat='{0:hh:mm} -'}"
+                                VerticalTextAlignment="Center" />
+
+                            <Label
+                                Style="{DynamicResource LightSmallLabelStyle}"
+                                Text="{Binding Occurrence.DatetimeEnd, StringFormat=' {0:hh:mm}'}"
+                                VerticalTextAlignment="Center" />
+                        </StackLayout>
+
+                    </StackLayout>
+
+                    <!--  DETALLE  -->
+                    <Label
+                        Margin="20,34,0,3"
+                        Text="DETALLE"
+                        TextColor="{DynamicResource PlaceholderColor}" />
+
+                    <!--  DESCRIPTION  -->
+                    <Label
+                        Margin="20,0,0,20"
+                        Text="{Binding Occurrence.Description}"
+                        TextColor="{DynamicResource DarkTextColor}" />
+
+                    <!--  MAP  -->
+                    <map:Map
+                        x:Name="map"
+                        Margin="0,40,0,0"
+                        HeightRequest="183"
+                        HorizontalOptions="FillAndExpand" />
+
+                    <!--  PLACE  -->
+                    <Label
+                        Margin="0,8,0,4"
+                        HorizontalOptions="Center"
+                        Style="{DynamicResource LightSmallLabelStyle}"
+                        Text="{Binding Occurrence.Place}"
+                        TextColor="{DynamicResource SelectedColor}" />
+
+                    <!--  DIRECTION  -->
+                    <Label
+                        Margin="0,0,0,30"
+                        HorizontalOptions="Center"
+                        Style="{DynamicResource LightSmallLabelStyle}"
+                        TextColor="{DynamicResource SelectedColor}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding Occurrence.Street, StringFormat=' {0} '}" />
+                                <Span Text="{Binding Occurrence.StreetNumber, StringFormat=' {0}'}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+
+        <ActivityIndicator
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsLoading}" />
+
+    </AbsoluteLayout>
+</ContentPage>

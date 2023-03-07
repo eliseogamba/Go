@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="Go.Views.LoginView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:viewModels="clr-namespace:Go.ViewModels">
+    <ContentView.BindingContext>
+        <viewModels:LoginViewModel />
+    </ContentView.BindingContext>
+    <AbsoluteLayout>
+
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            Spacing="0">
+            <StackLayout.Triggers>
+                <DataTrigger
+                    Binding="{Binding IsLoading}"
+                    TargetType="StackLayout"
+                    Value="True">
+                    <Setter Property="Opacity" Value="0.1" />
+                    <Setter Property="InputTransparent" Value="True" />
+                </DataTrigger>
+            </StackLayout.Triggers>
+
+            <!--  GO LOGO  -->
+            <Image
+                HeightRequest="100"
+                Source="logo"
+                WidthRequest="100" />
+
+            <!--  USERNAME FIELD  -->
+            <Frame Margin="0,150,0,30" Style="{DynamicResource Input}">
+
+                <Entry
+                    Margin="15,0,15,0"
+                    Keyboard="Plain"
+                    Placeholder="Usuario"
+                    Text="{Binding Username}" />
+
+            </Frame>
+
+            <!--  PASSWORD FIELD  -->
+            <Frame Style="{DynamicResource Input}">
+
+                <Entry
+                    Margin="15,0,15,0"
+                    IsPassword="True"
+                    Placeholder="Clave"
+                    Text="{Binding Password}" />
+
+            </Frame>
+
+            <!--  FORGET PASSWORD  -->
+            <Label
+                Margin="0,15,0,0"
+                HorizontalTextAlignment="Center"
+                Style="{DynamicResource SmallLabelStyle}"
+                Text="¿Olvidate tu contraseña?"
+                TextColor="{DynamicResource BaseDarkTextColor}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ForgetPasswordCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <!--  LOGIN BUTTON  -->
+            <Button
+                Margin="0,40,0,18"
+                Command="{Binding LoginCommand}"
+                HorizontalOptions="FillAndExpand"
+                Text="Iniciar sesión"
+                WidthRequest="-1" />
+
+            <!--  SIGN UP  -->
+            <Label HorizontalTextAlignment="Center" Style="{DynamicResource SmallLabelStyle}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SignUpCommand}" />
+                </Label.GestureRecognizers>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="¿No tiene cuenta?" />
+                        <Span Text=" Registraste" TextColor="{DynamicResource BrandColor}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+        </StackLayout>
+
+        <ActivityIndicator
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsLoading}" />
+
+    </AbsoluteLayout>
+</ContentView>
